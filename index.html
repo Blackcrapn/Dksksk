@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚠️ СИМУЛЯТОР СНОСЕРА</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #ff0000;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 60px;
+      text-shadow: 0 0 10px rgba(255,0,0,0.7);
+      letter-spacing: 2px;
+    }
+
+    .screen {
+      background: #110000;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      padding: 40px 20px;
+      margin-bottom: 30px;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .screen.hidden {
+      display: none;
+    }
+
+    input {
+      background: #000;
+      color: #00ff41;
+      border: 2px solid #008833;
+      padding: 14px 20px;
+      font: 1.3rem 'Courier New';
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      margin: 25px 0;
+      border-radius: 6px;
+    }
+
+    /* 🔥 КНОПКА — простая, надёжная, без анимаций на клик */
+    .btn {
+      background: #300000;
+      color: white;
+      border: 2px solid #ff0000;
+      padding: 16px 50px;
+      font: bold 1.4rem 'Courier New';
+      cursor: pointer;
+      margin: 20px 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      /* Критически важно: */
+      position: relative;
+      z-index: 10;
+      /* Никаких pointer-events: none! */
+    }
+
+    .btn:hover {
+      background: #500000;
+    }
+
+    .btn:active {
+      background: #700000;
+    }
+
+    #result {
+      font-size: 1.8rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      margin-top: 20px;
+      color: #ff0000;
+    }
+
+    .disclaimer {
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>СНОСЕР ТЕЛЕГРАМ АККАУНТОВ</h1>
+
+    <!-- Экран 1: Кнопка СНОС -->
+    <div class="screen" id="screen1">
+      <button class="btn" id="btn1">СНОС</button>
+    </div>
+
+    <!-- Экран 2: Ввод @username -->
+    <div class="screen hidden" id="screen2">
+      <h2>УКАЖИТЕ @username ПОЛЬЗОВАТЕЛЯ</h2>
+      <input type="text" id="target" placeholder="@username" maxlength="32">
+      <button class="btn" id="btn2">→ ПРОДОЛЖИТЬ</button>
+    </div>
+
+    <!-- Экран 3: Ввод своего юзернейма -->
+    <div class="screen hidden" id="screen3">
+      <h2>ТЕПЕРЬ УКАЖИТЕ СВОЙ ЮЗЕРНЕЙМ</h2>
+      <input type="text" id="self" placeholder="@ваш_юзернейм" maxlength="32">
+      <button class="btn" id="btn3">→ ВЫПОЛНИТЬ</button>
+    </div>
+
+    <!-- Экран 4: Результат -->
+    <div class="screen hidden" id="screen4">
+      <h2>РЕЗУЛЬТАТ:</h2>
+      <div id="result"></div>0
+      <div style="font-size:4rem; margin-top:20px;">😼</div>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ 
+    </div>
+  </div>
+
+  <script>
+    // Чистые, прямые обработчики — без ошибок
+    document.getElementById('btn1').onclick = () => {
+      document.getElementById('screen1').classList.add('hidden');
+      document.getElementById('screen2').classList.remove('hidden');
+    };
+
+    document.getElementById('btn2').onclick = () => {
+      const target = document.getElementById('target').value.trim();
+      if (!target) {
+        alert('⚠️ Введите @username');
+        return;
+      }
+      document.getElementById('screen2').classList.add('hidden');
+      document.getElementById('screen3').classList.remove('hidden');
+    };
+
+    document.getElementById('btn3').onclick = () => {
+      const self = document.getElementById('self').value.trim();
+      if (!self) {
+        alert('⚠️ Введите ваш @username');
+        return;
+      }
+
+      document.getElementById('screen3').classList.add('hidden');
+      document.getElementById('screen4').classList.remove('hidden');
+
+      // Показываем результат с небольшой задержкой для эффекта
+      setTimeout(() => {
+        document.getElementById('result').textContent = 
+`ПОПАЛСЯ? МАЛЕНЬКИЙ СНОСЕР.
+МЫ СНЕСЕМ ТВОЙ ТЕЛЕГРАМ АККАУНТ))
+ЖДИ.`;
+      }, 300);
+    };
+  </script>
+</body>
+</html>
